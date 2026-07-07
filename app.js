@@ -16,12 +16,12 @@ const TOTAL_STEPS = 17;
 
 /* ---------- dictionar de cuvinte ---------- */
 const F = {
-  fahrrad: {de:'das Fahrrad', icon:'fahrrad', audio:'f-fahrrad', gen:'n', art:'das', ro:'bicicleta', m:true},
-  fisch:   {de:'der Fisch',   icon:'fisch',   audio:'f-fisch',   gen:'m', art:'der', ro:'peștele',   m:true},
-  frosch:  {de:'der Frosch',  icon:'frosch',  audio:'f-frosch',  gen:'m', art:'der', ro:'broasca',   m:true},
-  feder:   {de:'die Feder',   icon:'feder',   audio:'f-feder',   gen:'f', art:'die', ro:'pana',      m:true},
-  fenster: {de:'das Fenster', icon:'fenster', audio:'f-fenster', gen:'n', art:'das', ro:'fereastra', m:true},
-  fuss:    {de:'der Fuß',     icon:'fuss',    audio:'f-fuss',    gen:'m', art:'der', ro:'piciorul',  m:true},
+  fahrrad: {de:'das Fahrrad', icon:'fahrrad', audio:'f-fahrrad', audioArt:'f-art-fahrrad', gen:'n', art:'das', ro:'bicicleta', m:true},
+  fisch:   {de:'der Fisch',   icon:'fisch',   audio:'f-fisch', audioArt:'f-art-fisch',   gen:'m', art:'der', ro:'peștele',   m:true},
+  frosch:  {de:'der Frosch',  icon:'frosch',  audio:'f-frosch', audioArt:'f-art-frosch',  gen:'m', art:'der', ro:'broasca',   m:true},
+  feder:   {de:'die Feder',   icon:'feder',   audio:'f-feder', audioArt:'f-art-feder',   gen:'f', art:'die', ro:'pana',      m:true},
+  fenster: {de:'das Fenster', icon:'fenster', audio:'f-fenster', audioArt:'f-art-fenster', gen:'n', art:'das', ro:'fereastra', m:true},
+  fuss:    {de:'der Fuß',     icon:'fuss',    audio:'f-fuss', audioArt:'f-art-fuss',    gen:'m', art:'der', ro:'piciorul',  m:true},
   maus:  {de:'die Maus',  icon:'m-maus',audio:'f-maus',  gen:'f', art:'die', ro:'șoricelul', m:false},
   mond:  {de:'der Mond',  icon:'m-mond',audio:'f-mond',  gen:'m', art:'der', ro:'luna',      m:false},
   ball:  {de:'der Ball',  icon:'ball',  audio:'f-ball',  gen:'m', art:'der', ro:'mingea',    m:false},
@@ -240,7 +240,7 @@ SCREENS[3] = function(){
     '<h1 class="title" style="font-size:1.5rem">Cuvinte cu F</h1>' +
     '<div class="cards">'+cards+'</div>' + nextBtn()
   );
-  stage.querySelectorAll('.card').forEach(el=>{ el.onclick = ()=>{ el.classList.add('tapped'); play(F[el.dataset.k].audio); }; });
+  stage.querySelectorAll('.card').forEach(el=>{ el.onclick = ()=>{ el.classList.add('tapped'); play(F[el.dataset.k].audioArt||F[el.dataset.k].audio); }; });
   wireNext(4);
 };
 
@@ -511,8 +511,9 @@ SCREENS[11] = function(){
       nextBtn()
     );
     const fc = document.getElementById('fc');
-    fc.onclick = ()=>{ fc.classList.toggle('flipped'); play(w.audio); };
-    play(w.audio);
+    const _wav = w.audioArt||w.audio;
+    fc.onclick = ()=>{ fc.classList.toggle('flipped'); play(_wav); };
+    play(_wav);
     const pv=document.getElementById('cprev'), nx=document.getElementById('cnext');
     pv.disabled = (i<=0); nx.disabled = (i>=WORDS_F.length-1);
     pv.onclick = ()=>{ if(i>0){ i--; card(); } };
